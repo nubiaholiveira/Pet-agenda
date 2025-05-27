@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusCliente {
+  ATIVO
+  INATIVO
+}
+
+model Cliente {
+  id       Int    @id @default(autoincrement())
+  nome     String
+  email    String @unique
+  telefone String
+  senha    String
+  pets     Pet[]
+  status   StatusCliente? @default(ATIVO)
+  observacao String @default("")
+
+  @@map("clientes")
+}
+
+model Pet {
+  id            Int            @id @default(autoincrement())
+  nome          String
+  especie       String
+  raca          String
+  idade         Int
+  peso          Int
+  clienteId     Int
+  cliente       Cliente        @relation(fields: [clienteId], references: [id])
+  agendamentos  Agendamento[]
+
+  @@map("pets")
+}
+
+model Servico {
+  id                Int                 @id @default(autoincrement())
+  nome              String
+  preco             Float
+  descricao         String
+  agendamentoServicos AgendamentoServico[]
+
+  @@map("servicos")
+}
+
+model Agendamento {
+  id                 Int                  @id @default(autoincrement())
+  data               DateTime
+  status             String
+  observacao         String               @default("")
+  petId              Int
+  pet                Pet                  @relation(fields: [petId], references: [id])
+  agendamentoServicos AgendamentoServico[]
+
+  @@map("agendamentos")
+}
+
+model AgendamentoServico {
+  id            Int         @id @default(autoincrement())
+  agendamentoId Int
+  servicoId     Int
+  agendamento   Agendamento @relation(fields: [agendamentoId], references: [id])
+  servico       Servico     @relation(fields: [servicoId], references: [id])
+
+  @@unique([agendamentoId, servicoId])
+  @@map("agendamento_servicos")
+} 
