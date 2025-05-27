@@ -38,6 +38,22 @@ Pet Agenda é uma aplicação abrangente projetada para gerenciar agendamentos d
 2. **Configurar Variáveis de Ambiente**: Certifique-se de que o `NEXT_PUBLIC_API_URL` no arquivo `.env` aponte para o seu servidor backend.
 3. **Iniciar o Servidor de Desenvolvimento**: Execute `npm run dev` para iniciar o servidor de desenvolvimento do frontend.
 
+ ## Executando com Docker Compose
+
+### Pré-requisitos
+- Docker
+- Docker Compose
+
+### Como Executar o Projeto com Docker Compose
+1. *Construir e Iniciar os Contêineres*: Navegue até o diretório raiz do projeto e execute docker-compose up --build para construir e iniciar os contêineres.
+2. *Acessar o Banco de Dados*: Certifique-se de que o contêiner do banco de dados está em execução e acessível.
+3. *Executar o Script de Seed*: Após os contêineres estarem em execução, execute o script seed.sql para popular o banco de dados com dados iniciais. Você pode fazer isso acessando o contêiner do banco de dados e executando o comando apropriado para importar o arquivo SQL.
+
+### Observações
+- Certifique-se de que as portas necessárias estão disponíveis e não estão em uso por outros serviços.
+- Verifique os logs dos contêineres para garantir que todos os serviços estão funcionando corretamente docker logs <nome_do_container>.
+- Para parar os contêineres, execute docker-compose down.
+
 ### Funcionalidades
 - **Dashboard**: Visualizar estatísticas e atividades recentes.
 - **Gerenciar Clientes**: Adicionar, editar e excluir informações de clientes.
